@@ -3,6 +3,23 @@
 use \Stripe\Stripe as Stripe;
 use \Stripe\Customer as StripeCustomer;
 
+/**
+ * A form that allows the user to enter their card details and
+ * save them "into" stripe.
+ *  
+ * The end user enters their credit card details and when the
+ * form is submitted, they are pushed to Stripe via the API.
+ * The form is then pre-populated with summary details of the
+ * saved payment details.
+ *
+ * By default this form uses the default Stripe JS, if you wish
+ * to overwrite this functionality (to perform custom operations)
+ * then make sure you disable the use_custom_js config variable.
+ *
+ * @package stripe-forms
+ * @subpackage forms
+ * @author Mo <morven@ilateral.co.uk>
+ */
 class StripePaymentDetailsForm extends Form
 {
 
@@ -95,6 +112,7 @@ class StripePaymentDetailsForm extends Form
     /**
      * Save stripe payment details against a customer
      *
+     * @return SS_HTTPResponse
      */
     public function doSavePaymentDetails($data)
     {
@@ -113,7 +131,7 @@ class StripePaymentDetailsForm extends Form
                     "good"
                 );
             } catch (Exception $e) {
-                return $this->controller->httpError(500, $e->getmessage());
+                $this->sessionMessage($e->getmessage(),"bad");
             }
         }
 

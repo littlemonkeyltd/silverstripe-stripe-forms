@@ -3,6 +3,13 @@
 use \Stripe\Stripe as Stripe;
 use \Stripe\Subscription as StripeAPISubscription;
 
+/**
+ * An object in Silverstripe that links to a stripe subscription.
+ *
+ * @package stripe-forms
+ * @subpackage model
+ * @author Mo <morven@ilateral.co.uk>
+ */
 class StripeSubscription extends DataObject
 {
 

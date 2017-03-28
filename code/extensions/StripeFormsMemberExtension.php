@@ -3,6 +3,14 @@
 use \Stripe\Stripe as Stripe;
 use \Stripe\Customer as StripeCustomer;
 
+/**
+ * Extension to be used to add extra functionality to a standard Silverstripe
+ * member.
+ *
+ * @package stripe-forms
+ * @subpackage extensions
+ * @author Mo <morven@ilateral.co.uk>
+ */
 class StripeFormsMemberExtension extends DataExtension
 {
     private static $db = array(

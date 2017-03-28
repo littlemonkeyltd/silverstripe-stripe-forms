@@ -5,9 +5,21 @@ use \Stripe\Customer as StripeCustomer;
 use \Stripe\Subscription as StripeAPISubscription;
 
 /**
- * Custom form of payment details form that also sets up a subscription to the
- * provided ID
+ * Custom version of the payment details form that also sets up
+ * a subscription that is then assigned to the user.
+ *  
+ * The end user enters their credit card details and when the
+ * form is submitted, they are pushed to Stripe via the API.
+ * The form is then pre-populated with summary details of the
+ * saved payment details.
  *
+ * By default this form uses the default Stripe JS, if you wish
+ * to overwrite this functionality (to perform custom operations)
+ * then make sure you disable the use_custom_js config variable.
+ *
+ * @package stripe-forms
+ * @subpackage forms
+ * @author Mo <morven@ilateral.co.uk>
  */
 class StripePaymentSubscriptionForm extends StripePaymentDetailsForm
 {
@@ -30,6 +42,13 @@ class StripePaymentSubscriptionForm extends StripePaymentDetailsForm
         return $this->plan_id;
     }
 
+    /**
+     * Create this form object
+     *
+     * @param $controller The current controller
+     * @param $name the name of this form (defaults to "StripePaymentDetailsForm")
+     * @param $plan_id The stripe plan we want to add this user to.
+     */
     public function __construct($controller, $name = "StripePaymentDetailsForm", $plan_id)
     {
         $this->plan_id = $plan_id;
@@ -38,8 +57,9 @@ class StripePaymentSubscriptionForm extends StripePaymentDetailsForm
     }
 
     /**
-     * Save stripe payment details against a customer
+     * Save stripe payment details against a customer using the stripe API
      *
+     * @return SS_HTTPResponse
      */
     public function doSavePaymentDetails($data)
     {
@@ -83,7 +103,7 @@ class StripePaymentSubscriptionForm extends StripePaymentDetailsForm
                     "good"
                 );
             } catch (Exception $e) {
-                return $this->controller->httpError(500, $e->getmessage());
+                $this->sessionMessage($e->getmessage(),"bad");
             }
         }
 
