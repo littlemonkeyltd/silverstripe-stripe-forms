@@ -13,9 +13,18 @@ use \Stripe\Subscription as StripeAPISubscription;
 class StripeSubscription extends DataObject
 {
 
+    /**
+     * The status in Stripe to show this is a currently active subscription.
+     *
+     * @var String
+     * @config
+     */
+    private static $active_status = "active";
+
     private static $db = array(
         "StripeID" => "Varchar(255)",
-        "PlanID" => "Varchar(255)"
+        "PlanID" => "Varchar(255)",
+        "Status" => "Varchar"
     );
 
     private static $has_one = array(
@@ -24,6 +33,7 @@ class StripeSubscription extends DataObject
 
     private static $summary_fields = array(
         "Member.Email" => "Member",
+        "Status" => "Status",
         "StripeID" => "Stripe ID",
         "PlanID" => "Plan"
     );
@@ -44,8 +54,51 @@ class StripeSubscription extends DataObject
             $subscription = StripeAPISubscription::retrieve($this->StripeID);
             return $subscription;
         } catch (Exception $e) {
+            error_log($e->getMessage());
             return null;
         }
+    }
+
+    /**
+     * Set the status of this subscription to the status logged in
+     * stripe and return the current object.
+     *
+     * @return StripeSubscription
+     */
+    public function updateStatus()
+    {
+        $subscription = $this->getSubscription();
+
+        if($subscription) {
+            $this->Status = $subscription->status;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Cancel the current subscription in stripe and return
+     * the current object.
+     *
+     * @return StripeSubscription
+     */
+    public function cancel()
+    {
+        $subscription = $this->getSubscription();
+
+        if($subscription) {
+            $subscription->cancel();
+            $this->Status = $subscription->status;
+        }
+
+        return $this;
+    }
+
+    public function onBeforeDelete()
+    {
+        parent::onBeforeDelete();
+
+        $this->cancel();
     }
 
 }
