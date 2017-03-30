@@ -51,6 +51,19 @@
     private static $use_custom_js = false;
 
     /**
+     * When a new subscription is made, should we delete all
+     * existing subscriptions?
+     *
+     * NOTE: If this is set to true it will remove all existing
+     * subscriptions on a member when they setup a new
+     * subscription.
+     *
+     * @var Boolean
+     * @config
+     */
+    private static $clear_subscriptions_on_setup = false;
+
+    /**
      * Either get the publish key from config
      * check if a global constant has been set
      *

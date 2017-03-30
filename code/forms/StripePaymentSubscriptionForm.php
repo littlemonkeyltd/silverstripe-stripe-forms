@@ -93,6 +93,13 @@ class StripePaymentSubscriptionForm extends StripePaymentDetailsForm
                 $existing_plans = $member->StripeSubscriptions()->filter("PlanID", $plan_id);
 
                 if (!$existing_plans->exists()) {
+                    // First clear any existing subscriptions (if needed)
+                    if (StripeForms::config()->clear_subscriptions_on_setup && $member->StripeSubscriptions()->exists()) {
+                        foreach($member->StripeSubscriptions() as $subscription) {
+                            $subscription->delete();
+                        }
+                    }
+
                     // Associate subscription in stripe
                     $stripe_subscription = StripeAPISubscription::create(array(
                         "customer" => $member->StripeID,
