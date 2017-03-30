@@ -112,7 +112,7 @@ class StripePaymentSubscriptionForm extends StripePaymentDetailsForm
                 $this->extend("onSuccessfulSavePaymentDetails", $data);
 
                 $this->sessionMessage(
-                    _t("StripeForms.UpdatedDetails", "Updated payment details"),
+                    _t("StripeForms.SubscriptionSetup", "Payment details saved and subscription setup"),
                     "good"
                 );
             } catch (Exception $e) {
