@@ -93,6 +93,14 @@ class StripePaymentSubscriptionForm extends StripePaymentDetailsForm
                 $existing_plans = $member->StripeSubscriptions()->filter("PlanID", $plan_id);
 
                 if (!$existing_plans->exists()) {
+                    // First cancel any existing subscriptions (if needed)
+                    if (StripeForms::config()->cancel_subscriptions_on_setup && $member->StripeSubscriptions()->exists()) {
+                        foreach($member->StripeSubscriptions() as $subscription) {
+                            $subscription->cancel();
+                            $subscription->write();
+                        }
+                    }
+
                     // First clear any existing subscriptions (if needed)
                     if (StripeForms::config()->clear_subscriptions_on_setup && $member->StripeSubscriptions()->exists()) {
                         foreach($member->StripeSubscriptions() as $subscription) {
@@ -107,6 +115,7 @@ class StripePaymentSubscriptionForm extends StripePaymentDetailsForm
                     ));
 
                     $subscription = StripeSubscription::create();
+                    $subscription->Status = $stripe_subscription->status;
                     $subscription->StripeID = $stripe_subscription->id;
                     $subscription->PlanID = $plan_id;
                     $subscription->MemberID = $member->ID;

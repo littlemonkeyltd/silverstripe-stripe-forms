@@ -51,6 +51,19 @@
     private static $use_custom_js = false;
 
     /**
+     * When a new subscription is made, should we cancel all
+     * existing subscriptions?
+     *
+     * NOTE: If this is set to false all existing subscriptions
+     * in the system will be left active, if they need to be canceled
+     * you will need to do that yourself.
+     *
+     * @var Boolean
+     * @config
+     */
+    private static $cancel_subscriptions_on_setup = true;
+
+    /**
      * When a new subscription is made, should we delete all
      * existing subscriptions?
      *
