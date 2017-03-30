@@ -13,6 +13,9 @@ use \Stripe\Subscription as StripeAPISubscription;
  * The form is then pre-populated with summary details of the
  * saved payment details.
  *
+ * This form expects a Stripe Plan ID (that the user will be added to).
+ * If this is not set, the form will be disabled and an error shown.
+ *
  * By default this form uses the default Stripe JS, if you wish
  * to overwrite this functionality (to perform custom operations)
  * then make sure you disable the use_custom_js config variable.
@@ -49,11 +52,21 @@ class StripePaymentSubscriptionForm extends StripePaymentDetailsForm
      * @param $name the name of this form (defaults to "StripePaymentDetailsForm")
      * @param $plan_id The stripe plan we want to add this user to.
      */
-    public function __construct($controller, $name = "StripePaymentDetailsForm", $plan_id)
+    public function __construct($controller, $name = "StripePaymentDetailsForm", $plan_id = null)
     {
         $this->plan_id = $plan_id;
         
         parent::__construct($controller, $name);
+
+        // if no plan is set, log a message and disable this form
+        if (!$plan_id) {
+            $this->sessionMessage(
+                _t("StripeForms.SelectStripePlan", "You need to select a plan before paying"),
+                "bad"
+            );
+
+            $this->makeReadOnly();
+        }
     }
 
     /**
