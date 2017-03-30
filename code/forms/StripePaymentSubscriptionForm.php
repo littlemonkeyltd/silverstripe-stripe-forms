@@ -90,7 +90,12 @@ class StripePaymentSubscriptionForm extends StripePaymentDetailsForm
                 $already_subscribed = true;
 
                 // See if we have any existing plans that match our ID
-                $existing_plans = $member->StripeSubscriptions()->filter("PlanID", $plan_id);
+                $existing_plans = $member
+                    ->StripeSubscriptions()
+                    ->filter(array(
+                        "Status" => StripeSubscription::config()->active_status,
+                        "PlanID" => $plan_id
+                    ));
 
                 if (!$existing_plans->exists()) {
                     // First cancel any existing subscriptions (if needed)
