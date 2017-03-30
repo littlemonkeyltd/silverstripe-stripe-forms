@@ -1,0 +1,7 @@
+---
+Name: stripeformsroutes
+After: framework/routes#rootroutes
+---
+Director:
+  rules:
+    'stripeforms/webhooks//$Action/$ID/$OtherID': 'Callback_Controller'

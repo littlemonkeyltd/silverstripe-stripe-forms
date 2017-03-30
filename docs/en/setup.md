@@ -51,3 +51,7 @@ While the site is in [dev mode](https://docs.silverstripe.org/en/3/developer_gui
 the test key's will be used.
 
 As soon as you switch the site to stage or live, the live key will be used instead.
+
+## Webhooks
+
+There is a dedicated page of docs for integrating with [Stripe webhooks](webhooks.md)

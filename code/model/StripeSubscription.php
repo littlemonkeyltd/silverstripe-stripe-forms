@@ -21,10 +21,20 @@ class StripeSubscription extends DataObject
      */
     private static $active_status = "active";
 
+    /**
+     * Number of times a payment attempt can fail before the subscription
+     * is cancelled.
+     *
+     * @var Int
+     * @config
+     */
+    private static $failier_attempts = 3;
+
     private static $db = array(
         "StripeID" => "Varchar(255)",
         "PlanID" => "Varchar(255)",
-        "Status" => "Varchar"
+        "Status" => "Varchar",
+        "PaymentAttempts" => "Int"
     );
 
     private static $has_one = array(
@@ -73,6 +83,8 @@ class StripeSubscription extends DataObject
             $this->Status = $subscription->status;
         }
 
+        $this->extend("onAfterUpdate");
+
         return $this;
     }
 
@@ -90,6 +102,8 @@ class StripeSubscription extends DataObject
             $subscription->cancel();
             $this->Status = $subscription->status;
         }
+
+        $this->extend("onAfterCancel");
 
         return $this;
     }

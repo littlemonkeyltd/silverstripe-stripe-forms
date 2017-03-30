@@ -77,6 +77,15 @@
     private static $clear_subscriptions_on_setup = false;
 
     /**
+     * Send notification emails as this address. If not set,
+     * the default admin email will be used.
+     * 
+     * @var String
+     * @config
+     */
+    private static $send_emails_as;
+
+    /**
      * Either get the publish key from config
      * check if a global constant has been set
      *

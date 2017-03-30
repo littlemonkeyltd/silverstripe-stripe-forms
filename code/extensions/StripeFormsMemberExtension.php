@@ -14,8 +14,7 @@ use \Stripe\Customer as StripeCustomer;
 class StripeFormsMemberExtension extends DataExtension
 {
     private static $db = array(
-        "StripeID" => "Varchar(255)",
-        "PaymentAttempts" => "Int"
+        "StripeID" => "Varchar(255)"
     );
 
     private static $has_many = array(
