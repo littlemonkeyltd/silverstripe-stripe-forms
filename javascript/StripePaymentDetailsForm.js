@@ -1,7 +1,9 @@
 Stripe.setPublishableKey('$PublishKey');
+jQuery.noConflict();
+
 var payment_form_id = '#$FormName';
 
-$(function() {
+(function($) {
     var payment_form = $(payment_form_id);
 
     payment_form.bind(
@@ -50,4 +52,4 @@ $(function() {
                 .submit();
         }
     };
-});
+}(jQuery));
