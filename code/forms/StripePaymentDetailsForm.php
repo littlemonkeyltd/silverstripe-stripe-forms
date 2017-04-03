@@ -153,7 +153,7 @@ class StripePaymentDetailsForm extends Form
         $member = Member::currentUser();
         $customer = $member->getStripeCustomer();
 
-        if ($customer && !$customer->deleted) {
+        if ($customer && !$customer->deleted && count($customer->sources->data)) {
             $stripe_card = $customer->sources->data[0];
 
             return new ArrayData(array(
