@@ -124,7 +124,7 @@ class StripePaymentDetailsForm extends Form
     protected function generate_years()
     {
         $i = new \DateTime();
-        $end = new \DateTimt("+ {$this->config()->future_years} years");
+        $end = new \DateTime("+ {$this->config()->future_years} years");
         $return = array(
             $i->format('Y') => $i->format('Y')
         );
