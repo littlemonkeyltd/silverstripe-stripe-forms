@@ -24,6 +24,36 @@ class StripePaymentDetailsForm extends Form
 {
 
     /**
+     * List of available months for the dropdown
+     *
+     * @var array
+     * @config
+     */
+    private static $months_of_year = array(
+        "1" => "1",
+        "2" => "2",
+        "3" => "3",
+        "4" => "4",
+        "5" => "5",
+        "6" => "6",
+        "7" => "7",
+        "8" => "8",
+        "9" => "9",
+        "10" => "10",
+        "11" => "11",
+        "12" => "12",
+    );
+
+    /**
+     * How many years in the future should the expiry
+     * dropdown run (defaults to 5).
+     *
+     * @var Int
+     * @config
+     */
+    private static $future_years = 5;
+    
+    /**
      * Config variable to specify if we want to use custom JS.
      * Enabling this will disable all requirements calls
      *
@@ -47,10 +77,10 @@ class StripePaymentDetailsForm extends Form
                 TextField::create("CardNumber")
                     ->setAttribute("name", "")
                     ->setAttribute("data-stripe", "number"),
-                TextField::create("ExpirationMonth")
+                DropdownField::create("ExpirationMonth", null, $this->config()->months_of_year)
                     ->setAttribute("name", "")
                     ->setAttribute("data-stripe", "exp_month"),
-                TextField::create("ExpirationYear")
+                DropdownField::create("ExpirationYear", null, $this->generate_years())
                     ->setAttribute("name", "")
                     ->setAttribute("data-stripe", "exp_year"),
                 TextField::create("CVC")
@@ -84,6 +114,26 @@ class StripePaymentDetailsForm extends Form
         if ($card_details) {
             $this->loadDataFrom($card_details);
         }
+    }
+
+    /** 
+     * Generate an array of years from the current year
+     *
+     * @return array
+     */
+    protected function generate_years()
+    {
+        $i = new \DateTime();
+        $end = new \DateTimt("+ {$this->config()->future_years} years");
+        $return = array(
+            $i->format('Y') => $i->format('Y')
+        );
+
+        for($i; $i < $end; $i->add(new \DateInterval('P1Y'))){
+            $return[$i->format('Y')] = $i->format('Y');
+        }
+
+        return $return;
     }
 
     /**
