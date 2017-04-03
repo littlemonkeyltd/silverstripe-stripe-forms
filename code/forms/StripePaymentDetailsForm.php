@@ -73,7 +73,7 @@ class StripePaymentDetailsForm extends Form
             // Fields
             FieldList::create(
                 HiddenField::create("StripeToken"),
-                ReadonlyField::create("CardType"),
+                HiddenField::create("CardType"),
                 TextField::create("CardNumber")
                     ->setAttribute("name", "")
                     ->setAttribute("data-stripe", "number"),
@@ -112,6 +112,13 @@ class StripePaymentDetailsForm extends Form
         $card_details = $this->get_card_details();
 
         if ($card_details) {
+            $this
+                ->Fields()
+                ->replaceField(
+                    "CardType",
+                    ReadonlyField::create("CardType")
+                );
+
             $this->loadDataFrom($card_details);
         }
     }
