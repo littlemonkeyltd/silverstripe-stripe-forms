@@ -77,10 +77,10 @@ class StripePaymentDetailsForm extends Form
                 TextField::create("CardNumber")
                     ->setAttribute("name", "")
                     ->setAttribute("data-stripe", "number"),
-                DropdownField::create("ExpirationMonth", null, $this->config()->months_of_year)
+                TextField::create("ExpirationMonth", "Experation Month (MM)", $this->config()->months_of_year)
                     ->setAttribute("name", "")
                     ->setAttribute("data-stripe", "exp_month"),
-                DropdownField::create("ExpirationYear", null, $this->generate_years())
+                TextField::create("ExpirationYear", "Experation Year (YYYY)", $this->generate_years())
                     ->setAttribute("name", "")
                     ->setAttribute("data-stripe", "exp_year"),
                 TextField::create("CVC")
