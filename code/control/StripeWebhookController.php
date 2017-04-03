@@ -10,7 +10,7 @@ use \Stripe\Subscription as StripeSubscription;
  * (currently only related to subscriptions).
  *
  */
-class Webhook_Controller extends Controller
+class StripeWebhookController extends Controller
 {
     /**
      * The URL this controller is available via
