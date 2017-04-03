@@ -3,7 +3,6 @@
 use \Stripe\Stripe as Stripe;
 use \Stripe\Event as StripeEvent;
 use \Stripe\Customer as StripeCustomer;
-use \Stripe\Subscription as StripeSubscription;
 
 /**
  * Controller to specifically handle stripe webhooks
