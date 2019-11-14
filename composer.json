@@ -1,9 +1,9 @@
 {
   "name": "i-lateral/silverstripe-stripe-forms",
   "description": "Add Stripe subscriptions and payment forms to your Silverstripe website",
-    "type": "silverstripe-module",
+    "type": "silverstripe-vendormodule",
     "homepage": "http://github.com/i-lateral/silverstripe-stripe-forms",
-    "keywords": ["silverstripe", "payments", "stripe", "forms", "plans"],
+    "keywords": ["silverstripe", "payments", "stripe", "forms", "plans", "subscriptions"],
     "license": "BSD-3-Clause",
     "authors": [
         {
@@ -15,8 +15,8 @@
         "issues": "http://github.com/i-lateral/silverstripe-stripe-forms/issues"
     },
     "require": {
-        "silverstripe/framework": ">=3.1",
-        "stripe/stripe-php": "v3.*"
+        "silverstripe/framework": "^4.0",
+        "stripe/stripe-php": "^7.0"
     },
     "suggest": {
         "silverstripe/cms": "Add full content management support to your site",
