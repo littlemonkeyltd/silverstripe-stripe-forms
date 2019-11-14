@@ -22,7 +22,9 @@
         "silverstripe/cms": "Add full content management support to your site",
         "i-lateral/silverstripe-users": "Add user account management, login and registration"
     },
-    "extra": {
-        "installer-name": "stripe-forms"
+	"autoload": {
+        "psr-4": {
+            "ilateral\\SilverStripe\\StripeForms": "src"
+        }
     }
 }
