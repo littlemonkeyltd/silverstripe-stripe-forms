@@ -13,7 +13,7 @@ use ilateral\SilverStripe\StripeForms\Model\StripeSubscription;
 /**
  * Custom version of the payment details form that also sets up
  * a subscription that is then assigned to the user.
- *  
+ *
  * The end user enters their credit card details and when the
  * form is submitted, they are pushed to Stripe via the API.
  * The form is then pre-populated with summary details of the
@@ -98,15 +98,15 @@ class StripePaymentSubscriptionForm extends StripePaymentDetailsForm
                 // See if we have any existing plans that match our ID
                 $existing_plans = $member
                     ->StripeSubscriptions()
-                    ->filter(array(
+                    ->filter([
                         "Status" => StripeSubscription::config()->active_status,
                         "PlanID" => $plan_id
-                    ));
+                    ]);
 
                 if (!$existing_plans->exists()) {
                     // First cancel any existing subscriptions (if needed)
                     if (StripeForms::config()->cancel_subscriptions_on_setup && $member->StripeSubscriptions()->exists()) {
-                        foreach($member->StripeSubscriptions() as $subscription) {
+                        foreach ($member->StripeSubscriptions() as $subscription) {
                             $subscription->cancel();
                             $subscription->write();
                         }
@@ -114,16 +114,16 @@ class StripePaymentSubscriptionForm extends StripePaymentDetailsForm
 
                     // First clear any existing subscriptions (if needed)
                     if (StripeForms::config()->clear_subscriptions_on_setup && $member->StripeSubscriptions()->exists()) {
-                        foreach($member->StripeSubscriptions() as $subscription) {
+                        foreach ($member->StripeSubscriptions() as $subscription) {
                             $subscription->delete();
                         }
                     }
 
                     // Associate subscription in stripe
-                    $stripe_subscription = StripeAPISubscription::create(array(
+                    $stripe_subscription = StripeAPISubscription::create([
                         "customer" => $member->StripeID,
                         "plan" => $plan_id
-                    ));
+                    ]);
 
                     $subscription = StripeSubscription::create();
                     $subscription->Status = $stripe_subscription->status;
@@ -143,7 +143,7 @@ class StripePaymentSubscriptionForm extends StripePaymentDetailsForm
                     "good"
                 );
             } catch (Exception $e) {
-                $this->sessionMessage($e->getmessage(),"bad");
+                $this->sessionMessage($e->getmessage(), "bad");
             }
         }
 

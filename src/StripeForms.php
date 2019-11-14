@@ -5,15 +5,14 @@ namespace ilateral\SilverStripe\StripeForms;
 use ViewableData;
 use Director;
 
-
 /**
  * Config class to store common settings and functions
  * for this module
  *
  * @package StripeForms
  */
- class StripeForms extends ViewableData
- {
+class StripeForms extends ViewableData
+{
 
     /**
      * Publish key for the test account
@@ -85,7 +84,7 @@ use Director;
     /**
      * Send notification emails as this address. If not set,
      * the default admin email will be used.
-     * 
+     *
      * @var String
      * @config
      */
@@ -99,7 +98,7 @@ use Director;
      */
     public static function publish_key()
     {
-        if(Director::isDev()) {
+        if (Director::isDev()) {
             if (defined("STRIPE_TEST_PK")) {
                 return STRIPE_TEST_PK;
             } else {
@@ -122,7 +121,7 @@ use Director;
      */
     public static function secret_key()
     {
-        if(Director::isDev()) {
+        if (Director::isDev()) {
             if (defined("STRIPE_TEST_SK")) {
                 return STRIPE_TEST_SK;
             } else {
@@ -136,4 +135,4 @@ use Director;
             }
         }
     }
- }
+}

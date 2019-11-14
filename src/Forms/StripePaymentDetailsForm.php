@@ -17,7 +17,7 @@ use ilateral\SilverStripe\StripeForms\StripeForms;
 /**
  * A form that allows the user to enter their card details and
  * save them "into" stripe.
- *  
+ *
  * The end user enters their credit card details and when the
  * form is submitted, they are pushed to Stripe via the API.
  * The form is then pre-populated with summary details of the
@@ -50,7 +50,6 @@ class StripePaymentDetailsForm extends Form
         parent::__construct(
             $controller,
             $name,
-
             // Fields
             FieldList::create(
                 HiddenField::create("StripeToken"),
@@ -71,7 +70,6 @@ class StripePaymentDetailsForm extends Form
                     ->setAttribute("name", "")
                     ->setAttribute("data-stripe", "address_zip")
             ),
-
             // Actions
             FieldList::create(
                 FormAction::create("doSavePaymentDetails", "Save")
@@ -83,10 +81,10 @@ class StripePaymentDetailsForm extends Form
             Requirements::javascript("https://js.stripe.com/v2/");
             Requirements::javascriptTemplate(
                 "stripe-forms/javascript/StripePaymentDetailsForm.js",
-                array(
+                [
                     "PublishKey" => $publish_key,
                     "FormName" => $this->FormName()
-                )
+                ]
             );
         }
 
@@ -106,7 +104,7 @@ class StripePaymentDetailsForm extends Form
 
     /**
      * Get the card details from stripe for the current user
-     * 
+     *
      * @return ArrayData | null
      */
     protected function get_card_details()
@@ -117,13 +115,13 @@ class StripePaymentDetailsForm extends Form
         if ($customer && !$customer->deleted && count($customer->sources->data)) {
             $stripe_card = $customer->sources->data[0];
 
-            return new ArrayData(array(
+            return new ArrayData([
                 "CardType" => $stripe_card->brand,
                 "CardNumber" => str_pad($stripe_card->last4, 16, "*", STR_PAD_LEFT),
                 "ExpirationMonth" => $stripe_card->exp_month,
                 "ExpirationYear" => $stripe_card->exp_year,
                 "BillingZip" => $stripe_card->address_zip
-            ));
+            ]);
         }
     }
  
@@ -149,11 +147,10 @@ class StripePaymentDetailsForm extends Form
                     "good"
                 );
             } catch (Exception $e) {
-                $this->sessionMessage($e->getmessage(),"bad");
+                $this->sessionMessage($e->getmessage(), "bad");
             }
         }
 
         return $this->controller->redirectBack();
     }
-
 }

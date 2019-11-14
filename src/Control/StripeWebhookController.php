@@ -21,7 +21,7 @@ class StripeWebhookController extends Controller
 {
     /**
      * The URL this controller is available via
-     * 
+     *
      * @var String
      * @config
      */
@@ -30,14 +30,14 @@ class StripeWebhookController extends Controller
     /**
      * Actions (methods that handle URLs) that can be called on this
      * controller
-     * 
+     *
      * @var array
      * @config
      */
-    private static $allowed_actions = array(
+    private static $allowed_actions = [
         "success",
         "failed"
-    );
+    ];
 
     /**
      * The json object from the current event
@@ -72,7 +72,7 @@ class StripeWebhookController extends Controller
     /**
      * Get the json data from the current post
      * and convert to an object
-     * 
+     *
      * @return Object
      */
     protected function get_json_data()
@@ -86,7 +86,7 @@ class StripeWebhookController extends Controller
      * if we want to proceed with the callback
      *
      * @param string $event_type Type of event
-     * @return Boolean 
+     * @return Boolean
      */
     protected function should_proceed($event_type)
     {
@@ -157,10 +157,10 @@ class StripeWebhookController extends Controller
                 ->setTo($member->Email)
                 ->setSubject(_t("StripeForms.PaidSubject", "New payment recieved"))
                 ->setTemplate('StripeFormsPaidEmail')
-                ->populateTemplate(new ArrayData(array(
+                ->populateTemplate(new ArrayData([
                     'Subscription' => $subscription,
                     'Member' => $member
-                )));
+                ]));
                 
             if (StripeForms::config()->send_emails_as) {
                 $email->setFrom(StripeForms::config()->send_emails_as);
@@ -170,12 +170,12 @@ class StripeWebhookController extends Controller
 
             $email->send();
 
-            return $this->renderWith(array(
+            return $this->renderWith([
                 "Webhook_success",
                 "Webhook_callback",
                 "Webhook",
                 "Page"
-            ));
+            ]);
         }
 
         return $this->httpError(404);
@@ -184,7 +184,7 @@ class StripeWebhookController extends Controller
     /**
      * Action to handle failed payment callbacks. This action logs the number of
      * failed payments and downgrades the user's account after 3.
-     * 
+     *
      */
     public function failed()
     {
@@ -217,11 +217,11 @@ class StripeWebhookController extends Controller
                         ->setTo($member->Email)
                         ->setSubject(_t("StripeForms.SubscriptionCancelled", "Your subscription has been cancelled"))
                         ->setTemplate('StripeSubscriptionCancelledEmail')
-                        ->populateTemplate(new ArrayData(array(
+                        ->populateTemplate(new ArrayData([
                             "FailedAttempts" => $subscription->PaymentAttempts,
                             "Subscription" => $subscription,
                             'Member' => $member
-                        )));
+                        ]));
                     
                     if (StripeForms::config()->send_emails_as) {
                         $email->setFrom(StripeForms::config()->send_emails_as);
@@ -237,11 +237,11 @@ class StripeWebhookController extends Controller
                         ->setTo($member->Email)
                         ->setSubject(_t("StripeForms.FailedPayment", "Your payment has failed"))
                         ->setTemplate('StripeFormsFailedEmail')
-                        ->populateTemplate(new ArrayData(array(
+                        ->populateTemplate(new ArrayData([
                             "RemainingAttempts" => StripeSubscription::config()->failier_attempts - $subscription->PaymentAttempts,
                             'Subscription' => $subscription,
                             'Member' => $member
-                        )));
+                        ]));
                     
                     if (StripeForms::config()->send_emails_as) {
                         $email->setFrom(StripeForms::config()->send_emails_as);
@@ -252,12 +252,12 @@ class StripeWebhookController extends Controller
                     $email->send();
                 }
 
-                return $this->renderWith(array(
+                return $this->renderWith([
                     "Webhook_failed",
                     "Webhook_callback",
                     "Webhook",
                     "Page"
-                ));
+                ]);
             }
         }
 

@@ -18,13 +18,13 @@ use ilateral\SilverStripe\StripeForms\StripeForms;
  */
 class StripeFormsMemberExtension extends DataExtension
 {
-    private static $db = array(
+    private static $db = [
         "StripeID" => "Varchar(255)"
-    );
+    ];
 
-    private static $has_many = array(
+    private static $has_many = [
         "StripeSubscriptions" => StripeSubscription::class
-    );
+    ];
 
     /**
      * Get a stripe customer from this member (if one exists)
@@ -58,11 +58,11 @@ class StripeFormsMemberExtension extends DataExtension
 
         // If no customer (or deleted), then create a new one, otherwise update
         if (!$customer || ($customer && $customer->deleted) && $token) {
-            $customer = StripeCustomer::create(array(
+            $customer = StripeCustomer::create([
                 "description" => "Customer {$this->owner->FirstName} {$this->owner->Surname}",
                 "source" => $token,
                 "email" => $this->owner->Email
-            ));
+            ]);
 
             $this->owner->StripeID = $customer->id;
             $this->owner->write();

@@ -35,28 +35,28 @@ class StripeSubscription extends DataObject
      */
     private static $failier_attempts = 3;
 
-    private static $db = array(
+    private static $db = [
         "StripeID" => "Varchar(255)",
         "PlanID" => "Varchar(255)",
         "Status" => "Varchar",
         "PaymentAttempts" => "Int"
-    );
+    ];
 
-    private static $has_one = array(
+    private static $has_one = [
         "Member" => "Member"
-    );
+    ];
 
-    private static $summary_fields = array(
+    private static $summary_fields = [
         "Member.Email" => "Member",
         "Status" => "Status",
         "StripeID" => "Stripe ID",
         "PlanID" => "Plan"
-    );
+    ];
 
     /**
      * Simple function to retrieve a subscription by ID
      * from Stripe.
-     * 
+     *
      * If subscription is invalid, then return null
      *
      * @return \Stripe\Subscription | null
@@ -84,7 +84,7 @@ class StripeSubscription extends DataObject
     {
         $subscription = $this->getSubscription();
 
-        if($subscription) {
+        if ($subscription) {
             $this->Status = $subscription->status;
         }
 
@@ -103,7 +103,7 @@ class StripeSubscription extends DataObject
     {
         $subscription = $this->getSubscription();
 
-        if($subscription) {
+        if ($subscription) {
             $subscription->cancel();
             $this->Status = $subscription->status;
         }
@@ -119,5 +119,4 @@ class StripeSubscription extends DataObject
 
         $this->cancel();
     }
-
 }
