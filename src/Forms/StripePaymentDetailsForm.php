@@ -1,7 +1,18 @@
 <?php
 
-use \Stripe\Stripe as Stripe;
-use \Stripe\Customer as StripeCustomer;
+namespace ilateral\SilverStripe\StripeForms\Forms;
+
+use \SilverStripe\Forms\Form;
+use \SilverStripe\Forms\FieldList;
+use \SilverStripe\Forms\HiddenField;
+use \SilverStripe\Forms\TextField;
+use \SilverStripe\Forms\FormAction;
+use \SilverStripe\View\Requirements;
+use \SilverStripe\Forms\ReadonlyField;
+use \SilverStripe\Security\Member;
+use \SilverStripe\View\ArrayData;
+use \Exception;
+use ilateral\SilverStripe\StripeForms\StripeForms;
 
 /**
  * A form that allows the user to enter their card details and
@@ -32,7 +43,7 @@ class StripePaymentDetailsForm extends Form
      */
     private static $use_custom_js = false;
     
-    public function __construct($controller, $name = "StripePaymentDetailsForm")
+    public function __construct($controller, $name = StripePaymentDetailsForm::class)
     {
         $publish_key = StripeForms::publish_key();
 

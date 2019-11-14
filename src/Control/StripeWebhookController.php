@@ -1,8 +1,16 @@
 <?php
 
+namespace ilateral\SilverStripe\StripeForms\Control;
+
 use \Stripe\Stripe as Stripe;
 use \Stripe\Event as StripeEvent;
-use \Stripe\Customer as StripeCustomer;
+use \SilverStripe\Control\Controller;
+use \SilverStripe\Control\Director;
+use \SilverStripe\Security\Member;
+use \SilverStripe\Control\Email\Email;
+use \SilverStripe\View\ArrayData;
+use ilateral\SilverStripe\StripeForms\StripeForms;
+use ilateral\SilverStripe\StripeForms\Model\StripeSubscription;
 
 /**
  * Controller to specifically handle stripe webhooks

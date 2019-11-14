@@ -1,5 +1,11 @@
 <?php
 
+namespace ilateral\SilverStripe\StripeForms;
+
+use ViewableData;
+use Director;
+
+
 /**
  * Config class to store common settings and functions
  * for this module

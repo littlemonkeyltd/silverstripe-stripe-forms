@@ -1,7 +1,12 @@
 <?php
 
+namespace ilateral\SilverStripe\StripeForms\Extensions;
+
 use \Stripe\Stripe as Stripe;
 use \Stripe\Customer as StripeCustomer;
+use \SilverStripe\ORM\DataExtension;
+use ilateral\SilverStripe\StripeForms\Model\StripeSubscription;
+use ilateral\SilverStripe\StripeForms\StripeForms;
 
 /**
  * Extension to be used to add extra functionality to a standard Silverstripe
@@ -18,7 +23,7 @@ class StripeFormsMemberExtension extends DataExtension
     );
 
     private static $has_many = array(
-        "StripeSubscriptions" => "StripeSubscription"
+        "StripeSubscriptions" => StripeSubscription::class
     );
 
     /**

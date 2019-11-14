@@ -1,0 +1,7 @@
+mappings:
+  StripeWebhookController: ilateral\SilverStripe\StripeForms\Control\StripeWebhookController
+  StripePaymentDetailsForm: ilateral\SilverStripe\StripeForms\Forms\StripePaymentDetailsForm
+  StripePaymentSubscriptionForm: ilateral\SilverStripe\StripeForms\Forms\StripePaymentSubscriptionForm
+  StripeForms: ilateral\SilverStripe\StripeForms\StripeForms
+  StripeFormsMemberExtension: ilateral\SilverStripe\StripeForms\Extensions\StripeFormsMemberExtension
+  StripeSubscription: ilateral\SilverStripe\StripeForms\Model\StripeSubscription

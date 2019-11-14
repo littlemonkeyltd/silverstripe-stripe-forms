@@ -1,7 +1,12 @@
 <?php
 
+namespace ilateral\SilverStripe\StripeForms\Model;
+
 use \Stripe\Stripe as Stripe;
 use \Stripe\Subscription as StripeAPISubscription;
+use \SilverStripe\ORM\DataObject;
+use \Exception;
+use ilateral\SilverStripe\StripeForms\StripeForms;
 
 /**
  * An object in Silverstripe that links to a stripe subscription.

@@ -1,8 +1,14 @@
 <?php
 
+namespace ilateral\SilverStripe\StripeForms\Forms;
+
 use \Stripe\Stripe as Stripe;
-use \Stripe\Customer as StripeCustomer;
 use \Stripe\Subscription as StripeAPISubscription;
+use \SilverStripe\Security\Member;
+use \Exception;
+use ilateral\SilverStripe\StripeForms\Forms\StripePaymentDetailsForm;
+use ilateral\SilverStripe\StripeForms\StripeForms;
+use ilateral\SilverStripe\StripeForms\Model\StripeSubscription;
 
 /**
  * Custom version of the payment details form that also sets up
@@ -52,7 +58,7 @@ class StripePaymentSubscriptionForm extends StripePaymentDetailsForm
      * @param $name the name of this form (defaults to "StripePaymentDetailsForm")
      * @param $plan_id The stripe plan we want to add this user to.
      */
-    public function __construct($controller, $name = "StripePaymentDetailsForm", $plan_id = null)
+    public function __construct($controller, $name = StripePaymentDetailsForm::class, $plan_id = null)
     {
         $this->plan_id = $plan_id;
         
