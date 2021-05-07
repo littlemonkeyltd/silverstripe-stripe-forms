@@ -2,8 +2,8 @@
 
 namespace ilateral\SilverStripe\StripeForms;
 
-use ViewableData;
-use Director;
+use SilverStripe\Control\Director;
+use SilverStripe\View\ViewableData;
 
 /**
  * Config class to store common settings and functions

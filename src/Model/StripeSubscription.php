@@ -17,6 +17,7 @@ use ilateral\SilverStripe\StripeForms\StripeForms;
  */
 class StripeSubscription extends DataObject
 {
+    private static $table_name="StripeSubscription";
 
     /**
      * The status in Stripe to show this is a currently active subscription.

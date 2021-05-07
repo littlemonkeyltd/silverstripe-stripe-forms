@@ -1,6 +1,6 @@
 ---
 Name: StripeForms
 ---
-Member:
+SilverStripe\Security\Member:
   extensions:
-    - StripeFormsMemberExtension
+    - ilateral\SilverStripe\StripeForms\Extensions\StripeFormsMemberExtension
